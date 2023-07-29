@@ -28,12 +28,12 @@ def index_articles():
 @app.route('/articles/<int:id>')
 def show_article(id):
     session['page_views'] = session.get('page_views') or 0
-    session['page_views'] = int(session['page_views'])+1
+    session['page_views'] = session['page_views']+1
     if session['page_views'] <= 3:
         response = make_response(Article.query.filter_by(id=id).first().to_dict(), 200)
     else:
         response = make_response({'message': 'Maximum pageview limit reached'}, 401)
-    response.set_cookie('page_views', str(session['page_views']))
+    # response.set_cookie('page_views', str(session['page_views']))
     return response
 
 if __name__ == '__main__':
